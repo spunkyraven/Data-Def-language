@@ -1,0 +1,27 @@
+              Physical Model: from Relational 
+            Diagram to setting up DB in an RDBMS
+1) CREATE TABLE
+   CREATE TABLE Customer (
+   Customer_id VARCHAR2(20) CONSTRAINT PK_Cust PRIMARY KEY (Customer_id),
+   Customer_Name VARCHAR2(20) CONSTRAINT Name_Cust_Const NOT NULL,
+   Customer_Tel NUMBER );
+   CREATE TABLE Product (
+   Product_id VARCHAR2(20) CONSTRAINT PK_Prod PRIMARY KEY (Product_id),
+   Product_Name VARCHAR2(20) CONSTRAINT Name_Prod_Const NOT NULL,
+   Price NUMBER CONSTRAINT Price_Const CHECK (Price>0) );
+   CREATE TABLE Orders (
+   Customer_id VARCHAR2(20) CONSTRAINT FK_Cust Customer_id REFERENCES 
+   Customer (Customer_id),
+   Product_id VARCHAR2(20) CONSTRAINT FK_Prod Product_id REFERENCES
+   Product (Product_id),
+   Quantity NUMBER,
+   Total_amount NUMBER,
+   CONSTRAINT PK_Order PRIMARY KEY (Customer_id, Product_id) );
+2) ALTER TABLE
+     //Add a column Category (VARCHAR2(20)) to the Product table
+  ALTER TABLE Product ADD Category VARCHAR2 (20);
+    // Add a column OrderDate (DATE) to the Orders table which have SYSDATE 
+  as a default value
+  ALTER TABLE Orders ADD OrderDate DATE;
+  ALTER TABLE Orders ADD CONSTRAINT OrderDate_Const DEFAULT GetData() 
+  FOR OrderDate;
